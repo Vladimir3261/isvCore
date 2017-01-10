@@ -3,7 +3,7 @@
   "type": "library",
   "description": "Composer package by ISVTeam",
   "license": "MIT",
-  "minimum-stability": "1.01",
+  "minimum-stability": "dev-master",
   "require": {
     "php": ">=5.4.0"
   },
