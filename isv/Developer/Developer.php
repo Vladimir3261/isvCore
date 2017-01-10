@@ -23,4 +23,11 @@ class Developer
         if($kill)
             exit(1);
     }
+
+    public static function productionDump($var)
+    {
+        echo '<!--';
+        var_dump($var);
+        echo '-->';
+    }
 }
