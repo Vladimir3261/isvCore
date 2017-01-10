@@ -1,7 +1,7 @@
 {
   "name": "isv/framework",
   "type": "library",
-  "description": "Composer package by ISVTEAM",
+  "description": "Composer package by ISVTeam",
   "license": "MIT",
   "minimum-stability": "dev",
   "require": {
