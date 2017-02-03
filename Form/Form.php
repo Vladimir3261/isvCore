@@ -84,6 +84,10 @@ class Form
             return $this->getEmail($name, $params);
         else if($params['type'] === 'tel')
             return $this->getTel($name, $params);
+        else if($params['type'] === 'color')
+            return $this->getColor($name, $params);
+        else if($params['type'] === 'datetime')
+            return $this->getDateTime($name, $params);
         else
             return $this->getInput($name, $params);
     }
@@ -174,6 +178,22 @@ class Form
     }
 
     /**
+     * Date & time picker default from browser
+     * @param $name
+     * @param $params
+     * @return string
+     */
+    public function getDateTime($name, $params)
+    {
+        $str = '<input type="date" name="'.$name.'" ';
+        foreach($params as $k=>$v){
+            $str.=$k.'="'.$v.'" ';
+        }
+        $str.='/>';
+        return $str;
+    }
+
+    /**
      * password input
      * @param $name
      * @param $params
@@ -214,6 +234,16 @@ class Form
     public function getTel($name, $params)
     {
         $str = '<input type="tel" name="'.$name.'" ';
+        foreach($params as $k=>$v){
+            $str.=$k.'="'.$v.'" ';
+        }
+        $str.='/>';
+        return $str;
+    }
+
+    public function getColor($name, $params)
+    {
+        $str = '<input type="color" name="'.$name.'" ';
         foreach($params as $k=>$v){
             $str.=$k.'="'.$v.'" ';
         }
@@ -278,5 +308,10 @@ class Form
     {
         $str = ($this->exists) ? $this->getHidden($this->exists) : '';
         return $str."\r\n".'</form>';
+    }
+
+    public function isExists()
+    {
+        return $this->exists === NULL ? false : true;
     }
 }

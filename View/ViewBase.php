@@ -121,7 +121,9 @@ class ViewBase
      */
     public function css($link)
     {
-        return '<link rel="stylesheet" type="text/css" href="'. $this->getSiteLink($link) .'">'."\r\n";
+        $templateName = IS::app()->get('templateName') ? IS::app()->get('templateName') : IS::app()->getConfig('config')['template'];
+        $v= md5_file(ROOTDIR.DIRSEP.IS::app()->getConfig('config')['publicDir'].DIRSEP.$templateName.DIRSEP.$link);
+        return '<link rel="stylesheet" type="text/css" href="'. $this->getSiteLink($link) .'?v='.$v.'">'."\r\n";
     }
 
     /**
@@ -131,7 +133,9 @@ class ViewBase
      */
     public function js($link)
     {
-        return '<script src="'. $this->getSiteLink($link) .'"></script>'."\r\n";
+        $templateName = IS::app()->get('templateName') ? IS::app()->get('templateName') : IS::app()->getConfig('config')['template'];
+        $v= md5_file(ROOTDIR.DIRSEP.IS::app()->getConfig('config')['publicDir'].DIRSEP.$templateName.DIRSEP.$link);
+        return '<script src="'. $this->getSiteLink($link) .'?v='.$v.'"></script>'."\r\n";
     }
 
     /**

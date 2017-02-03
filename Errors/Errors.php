@@ -57,4 +57,10 @@ class Errors
         self::includes('\Controller\Errors\ErrorController', 'badrequestAction');
         Header::send(400);
     }
+
+    public static function serverError()
+    {
+        Header::send(500);
+        self::includes('\Controller\Errors\ErrorController', 'fatalAction');
+    }
 }

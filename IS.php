@@ -244,6 +244,7 @@ class IS
      */
     public function start()
     {
+        set_error_handler([$this, 'exception_error_handler']);
         session_start();
         $configFiles = scandir('../config');
         $cfg = [];
@@ -261,4 +262,23 @@ class IS
         $router = new Router();
         $router->load();
     }
+
+    /**
+     * Handle server errors.
+     * Note: Fatal errors can't be handled by this function
+     * @param $severity int
+     * @param $message string
+     */
+    public function exception_error_handler($severity, $message)
+    {
+        if (!(error_reporting() & $severity)) {
+            return;
+        }
+        try{
+            throw new CoreException("Server error: ".$message, $severity);
+        }catch (CoreException $e){
+            $e->reset();
+        }
+    }
+
 }

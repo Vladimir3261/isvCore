@@ -18,9 +18,10 @@ class CoreException extends ISVException
     public function reset()
     {
         if(!DEBUG){
-            Errors::viewError();
+            Errors::serverError();
         }else{
            parent::display(); 
         }
+        exit(1);
     }
 }
