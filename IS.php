@@ -244,7 +244,6 @@ class IS
      */
     public function start()
     {
-        die('ERROR!');
         set_error_handler([$this, 'exception_error_handler']);
         session_start();
         $configFiles = scandir('../config');
