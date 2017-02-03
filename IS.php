@@ -180,7 +180,18 @@ class IS
      */
     public function component($component)
     {
-        $class = 'Component\\'.ucfirst($component).'Component';
+        $class = '\Component\\'.ucfirst($component).'Component';
+        $pluginsConfig = static::getConfig('plugins');
+        $config = $pluginsConfig['components']; // Plugins config array
+
+        if(key_exists($class, $config))
+        {
+            $pluginClass = $config[$class];
+            if( class_exists($pluginClass) && in_array('Component\\'.ucfirst($component).'Component', class_parents($pluginClass)) )
+            {
+                $class = $pluginClass;
+            }
+        }
         try
         {
             if(!class_exists($class))
