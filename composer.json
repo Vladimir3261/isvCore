@@ -1,5 +1,5 @@
 {
-  "name": "isv/framework",
+  "name": "framework",
   "type": "library",
   "description": "Composer package by ISVTeam",
   "license": "MIT",
@@ -13,6 +13,7 @@
       "Models\\": "Models",
       "Widget\\": "Widgets",
       "Component\\": "Components",
+      "Plugins\\": "Plugins",
       "isv\\":"vendor/isv"
     }
   }
