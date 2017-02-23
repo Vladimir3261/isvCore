@@ -263,6 +263,25 @@ class IS
         $router->load();
     }
 
+    public function cli()
+    {
+        set_error_handler([$this, 'cli_error_handler']);
+        $configFiles = scandir(ROOTDIR.DIRSEP.'config');
+        $cfg = [];
+        foreach($configFiles as $config)
+        {
+            if(is_file(ROOTDIR.DIRSEP.'config'.DIRSEP.$config))
+            {
+                $conf = include_once ROOTDIR.DIRSEP.'config'.DIRSEP.$config;
+                $cfg = array_merge($cfg, $conf);
+            }
+        }
+        self::$config = $cfg;
+        isset(self::$config['EventManager']) ? $EM = self::$config['EventManager'] : $EM = [];
+        EventManager::initEventManager($EM);
+    }
+
+
     /**
      * Handle server errors.
      * Note: Fatal errors can't be handled by this function
@@ -278,6 +297,24 @@ class IS
             throw new CoreException("Server error: ".$message, $severity);
         }catch (CoreException $e){
             $e->reset();
+        }
+    }
+
+    /**
+     * Console env mode
+     * @param $severity
+     * @param $message
+     * @throws \Exception
+     */
+    public function cli_error_handler($severity, $message)
+    {
+        if (!(error_reporting() & $severity)) {
+            return;
+        }
+        try{
+            throw new \Exception("Server error: ".$message, $severity);
+        }catch (\Exception $e){
+            Logger::log('cli', 'ERROR: '.$severity.' - '.$message);
         }
     }
 
