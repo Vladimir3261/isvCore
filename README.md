@@ -5,7 +5,8 @@
 </p>
 
 ISV framework is a modern and easy framework for e-commerce projects.
-
+This is just framework core. Skeleton application you can install from 
+ [![here]()](https://bitbucket.org/Vladimir3261/framework)
 
 [![Latest Stable Version]()](https://packagist.org/packages/isv/framework)
 
