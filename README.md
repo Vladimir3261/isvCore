@@ -1,0 +1,1 @@
+ISVTEAM FRAMEWORK core
