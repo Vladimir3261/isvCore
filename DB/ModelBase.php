@@ -187,6 +187,30 @@ abstract class ModelBase implements ModelBaseInterface
     }
 
     /**
+     * get count records in query
+     * @param string $fields
+     * @param null $params
+     * @return int
+     */
+    public function count($fields = '*', $params = null)
+    {
+        if(is_array($fields)){$params = $fields; $fields = '*';}
+        if(!$params)
+        {
+            $stmt = $this->Adapter->prepare("SELECT COUNT(*)  FROM $this->table");
+            $stmt->execute();
+        }
+        else
+        {
+            $readyQuery = $this->BuildQuery($params, $fields);
+            $stmt = $this->Adapter->prepare($readyQuery['sql']);
+            $stmt->execute($readyQuery['params']);
+        }
+        return (int)$stmt->fetch(PDO::FETCH_COLUMN);
+    }
+
+
+    /**
      * Delete row from database using primary key
      * @param $primary int
      * @return bool
