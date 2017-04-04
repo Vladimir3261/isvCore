@@ -46,6 +46,14 @@ interface ModelBaseInterface
     public function findOne($fields = '*', $params = NULL);
 
     /**
+     * This implementation of SQL COUNT(*)
+     * @param string $fields
+     * @param null $params
+     * @return mixed
+     */
+    public function count($fields = '*', $params = NULL);
+
+    /**
      * delete record using record primary key
      * @param int $primary
      * @return mixed
