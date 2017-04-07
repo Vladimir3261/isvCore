@@ -139,7 +139,7 @@ class Generator
         $fileContent.='    /**';
         $fileContent.='    *@return bool';
         $fileContent.='    */';
-        $fileContent.= PHP_EOL.'    public function validateData(){ return parent::validateData(); }'.PHP_EOL;
+        $fileContent.= PHP_EOL.'    public function validateData(){ return true; }'.PHP_EOL;
         $fileContent.=PHP_EOL;
         $fileContent.='    /**';
         $fileContent.='    *@return array';
