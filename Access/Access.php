@@ -5,7 +5,6 @@
  * Date: 10.08.16
  * Time: 17:11
  */
-
 namespace isv\Access;
 
 /**

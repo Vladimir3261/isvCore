@@ -3,6 +3,7 @@ namespace isv;
 use isv\Component\ISVComponent;
 use isv\Exception\CoreException;
 use isv\Helper\Breadcrumbs;
+use isv\Helper\Logger;
 use isv\Http\Request;
 use isv\Router\Router;
 use isv\Http\Session;
@@ -38,6 +39,10 @@ class IS
     private static $request = null;
 
     private static $user = null;
+    /**
+     * @var array
+     */
+    private $settings;
 
     /**
      * Current page breadcrumbs
@@ -114,6 +119,33 @@ class IS
         }
         else {
             return false;
+        }
+    }
+
+    /**
+     * JSON settings.
+     * @param $filename
+     * @return \stdClass
+     */
+    public function settings($filename)
+    {
+        try {
+            if(is_file(ROOTDIR.DIRSEP.'config'.DIRSEP.'json'.DIRSEP.$filename.'.json'))
+            {
+                if(!isset($this->settings[$filename]))
+                {
+                    $decoded = json_decode(file_get_contents(ROOTDIR.DIRSEP.'config'.DIRSEP.'json'.DIRSEP.$filename.'.json'));
+                    $this->settings[$filename] = $decoded;
+                }
+                return $this->settings[$filename];
+            }
+            else
+            {
+                throw new CoreException('Config '.$filename.'.json not exists in json directory', 2963);
+            }
+        }
+        catch (CoreException $e) {
+            $e->display();exit(1);
         }
     }
 

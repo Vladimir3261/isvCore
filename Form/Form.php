@@ -1,6 +1,6 @@
 <?php
 namespace isv\Form;
-
+use isv\DB\ModelBase;
 /**
  * Class Form
  * @package isv\Form
@@ -11,15 +11,18 @@ class Form
     protected $formParams = ['method' => 'post', 'action' => '/'];
     protected $formFields;
     protected $exists=NULL;
+    protected $model;
 
     /**
      * Form constructor.
      * @param $modelArray
      * @param $params
+     * @param $model ModelBase
      * IN constructor write
      */
-    public function __construct($modelArray, $params)
+    public function __construct($modelArray, $params, $model=NULL)
     {
+        $this->model = $model;
         if($modelArray[$modelArray['primaryName']]) {
             $this->exists = [
                 'name' => $modelArray['primaryName'],
@@ -88,6 +91,8 @@ class Form
             return $this->getColor($name, $params);
         else if($params['type'] === 'datetime')
             return $this->getDateTime($name, $params);
+        else if($params['type'] === 'number')
+            return $this->getNumberInput($name, $params);
         else
             return $this->getInput($name, $params);
     }
@@ -170,6 +175,22 @@ class Form
     public function getInput($name, $params)
     {
         $str = '<input type="text" name="'.$name.'" ';
+        foreach($params as $k=>$v){
+            $str.=$k.'="'.$v.'" ';
+        }
+        $str.='/>';
+        return $str;
+    }
+
+    /**
+     * Number input
+     * @param $name
+     * @param $params
+     * @return string
+     */
+    public function getNumberInput($name, $params)
+    {
+        $str = '<input type="number" name="'.$name.'" ';
         foreach($params as $k=>$v){
             $str.=$k.'="'.$v.'" ';
         }
@@ -313,5 +334,10 @@ class Form
     public function isExists()
     {
         return $this->exists === NULL ? false : true;
+    }
+
+    public function label($name)
+    {
+        return $this->model->label($name);
     }
 }

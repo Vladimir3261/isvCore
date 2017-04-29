@@ -414,11 +414,14 @@ abstract class ModelBase implements ModelBaseInterface
 
     /**
      * get all model PDO and validate errors for user. this method just return
+     * @param  $index
      * @return array
      */
-    public function getErrors()
+    public function getErrors($index=NULL)
     {
-        return $this->errors;
+        if(!$index)
+            return $this->errors;
+        return isset($this->errors[$index]) ? $this->errors[$index] : NULL;
     }
 
     /**
@@ -467,7 +470,7 @@ abstract class ModelBase implements ModelBaseInterface
      */
     public function getFrom()
     {
-        return new Form($this->ToArray(), $this->forms());
+        return new Form($this->ToArray(), $this->forms(), $this);
     }
 
     /**
@@ -479,8 +482,10 @@ abstract class ModelBase implements ModelBaseInterface
     {
         foreach($array as $k => $v)
         {
-               if( property_exists($this, $k) )
-                   $this->$k = $v;
+            $method = 'set'.ucfirst($k);
+            if( method_exists($this, $method) ) {
+                $this->$method($v);
+            }
         }
         foreach($this->forms() as $col => $rules)
         {

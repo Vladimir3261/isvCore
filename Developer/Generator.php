@@ -90,9 +90,10 @@ class Generator
             $fileContent .='    '.PHP_EOL;
         }
         // Methods
+        $primaryDefined = false;
         foreach($structure as $field)
         {
-            if($field['Key'] === 'PRI')
+            if($field['Key'] === 'PRI' && !$primaryDefined)
             {
                 $fileContent .='    /**'.PHP_EOL;
                 $fileContent .='     *'.PHP_EOL;
@@ -104,6 +105,7 @@ class Generator
                 $fileContent .='        return \''.$field['Field'].'\';'.PHP_EOL;
                 $fileContent .='    }'.PHP_EOL;
                 $fileContent .='    '.PHP_EOL;
+                $primaryDefined = true;
             }
             else
             {
@@ -157,6 +159,7 @@ class Generator
             'text' => 'textarea',
             'float' => 'text',
             'tinyint' => 'checkbox',
+            'char' => 'text',
         ];
         $file = ROOTDIR.'/Models/'.  ucfirst($table).'Model.php';
         if(!is_file($file))

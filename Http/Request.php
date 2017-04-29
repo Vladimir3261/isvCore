@@ -15,6 +15,8 @@ namespace isv\Http;
  */
 class Request
 {
+    const IP_STRING = 1;
+    const IP2LONG = 2;
     /**
      * getMethod function return request method
      * @return string
@@ -34,6 +36,13 @@ class Request
             return isset($_POST[$key]) ? $_POST[$key] : NULL;
         else
             return $_POST;
+    }
+
+    public function ip($type=Request::IP_STRING)
+    {
+        if(!isset($_SERVER['REMOTE_ADDR']) || !$_SERVER['REMOTE_ADDR'])
+            return 0;
+        return $type===static::IP_STRING ? $_SERVER['REMOTE_ADDR'] : ip2long($_SERVER['REMOTE_ADDR']);
     }
 
     /**

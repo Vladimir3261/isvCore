@@ -12,6 +12,9 @@ use isv\IS;
  */
 class ViewBase
 {
+    const RESPONSE_HTML = 1;
+    const RESPONSE_JSON = 2;
+
     protected $params;
     /**
      * @param array | null $params
@@ -34,10 +37,10 @@ class ViewBase
 
     protected $controller;
 
-    public function __construct($params = null)
+    private $responseType = ViewBase::RESPONSE_HTML;
+
+    public function __construct($params=null, $responseType=ViewBase::RESPONSE_HTML)
     {
-        $config = IS::app()->getConfig('config');
-        $templateName = IS::app()->get('templateName') ? IS::app()->get('templateName') : $config['template'];
         // check input params from controller this must be array required
         try
         {
@@ -50,6 +53,18 @@ class ViewBase
             exit(1);
         }
         $this->params = $params;
+        $this->responseType = $responseType;
+    }
+
+    public function response()
+    {
+        if($this->responseType === static::RESPONSE_JSON)
+        {
+            header('Content-Type: application/json');
+            echo json_encode($this->params);die();
+        }
+        $config = IS::app()->getConfig('config');
+        $templateName = IS::app()->get('templateName') ? IS::app()->get('templateName') : $config['template'];
         $this->controller = str_replace('\\', DIRSEP, strtolower(str_replace('Controller', '', IS::app()->get('controller'))));
         $action = strtolower(str_replace('Action', '', IS::app()->get('action')));
         $this->viewPath = isset($config['viewPath']) ? $config['viewPath'] : ROOTDIR.'/views';

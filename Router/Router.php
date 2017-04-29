@@ -2,7 +2,9 @@
 
 namespace isv\Router;
 use isv\Exception\RouterException;
+use isv\Http\Header;
 use isv\IS;
+use isv\View\ViewBase;
 
 /**
  * Class Router. receives data from the address bar and searches
@@ -123,7 +125,18 @@ Class Router
         IS::app()->set('action', $action);
         $fullControllerName = '\Controller\\'.$controller;
         $controllerInstance = new $fullControllerName($params);
-        $controllerInstance->$action();
+        /**
+         * @var $render ViewBase
+         */
+        $render = $controllerInstance->$action();
+        try
+        {
+            if(!$render || !($render instanceof ViewBase))
+                throw new RouterException('Controller method should be return '.ViewBase::class.' instance', 9665);
+            $render->response();
+        }catch (RouterException $e){
+            $e->display();
+        }
     }
 
     /**

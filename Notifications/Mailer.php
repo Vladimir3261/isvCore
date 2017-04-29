@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: vladimir
@@ -7,7 +6,6 @@
  * Time: 4:32 PM
  */
 namespace isv\Notifications;
-
 use isv\Helper\Logger;
 use isv\IS;
 
@@ -59,6 +57,7 @@ class Mailer
         }else{
             Logger::log('global', 'Failed to send email to '.var_export($to, true). 'With message: '.$mail->ErrorInfo);
             static::$errors = $mail->ErrorInfo;
+            return false;
         }
     }
 
@@ -66,13 +65,15 @@ class Mailer
     {
         $templateFile = IS::app()->getConfig('config')['emailDir'].DIRSEP.$templateName.'.html';
         if(!is_file($templateFile)){
-            return 'Email template file not exists';
             Logger::log('global', 'Email template file: '.$templateFile.' not exists');
+            return 'Email template file not exists';
         }
         $fileContent = file_get_contents($templateFile);
         if($data && count($data))
         {
             return str_replace(array_keys($data), array_values($data), $fileContent);
+        }else{
+            return $fileContent;
         }
     }
 }
