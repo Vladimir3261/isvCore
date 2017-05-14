@@ -56,7 +56,7 @@ abstract class Widget
         {
             $e->reset();exit(1);
         }
-        require_once $file;
+        include $file;
     }
 
     /**
