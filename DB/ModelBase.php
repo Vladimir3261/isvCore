@@ -506,4 +506,20 @@ abstract class ModelBase implements ModelBaseInterface
         $this->pageCount = $count;
         $this->currentPage = ( IS::app()->get('page') ) ? (IS::app()->get('page')*$this->pageCount)-$this->pageCount : 0;
     }
+
+//    public function __sleep()
+//    {
+//        unset($this->pdoFetch);
+//        unset($this->cmsFetchMode);
+//        unset($this->primaryName);
+//        unset($this->Adapter);
+//        $array = $this->ToArray();
+//        return array_keys($array);
+//    }
+
+    // Session serialization hot fix
+    public function unsetAdapter()
+    {
+        unset($this->Adapter);
+    }
 }
