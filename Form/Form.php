@@ -11,6 +11,7 @@ class Form
     protected $formParams = ['method' => 'post', 'action' => '/'];
     protected $formFields;
     protected $exists=NULL;
+    private $formArrayName=NULL;
     protected $model;
 
     /**
@@ -37,6 +38,11 @@ class Form
                 $this->formFields[$k]['value'] = $v;
             }
         }
+    }
+
+    public function fromArrayName($name)
+    {
+        $this->formArrayName = $name;
     }
 
     /**
@@ -71,6 +77,8 @@ class Form
      */
     public function build($name, $params, $selectors=NULL)
     {
+        if($this->formArrayName)
+            $name = $this->formArrayName.'['.$name.']';
         if($params['type'] === 'textarea')
             return $this->getTextArea($name, $params);
         else if($params['type'] === 'checkbox')

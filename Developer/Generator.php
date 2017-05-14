@@ -22,10 +22,10 @@ class Generator
      */
     public function __construct()
     {
-        if($_SERVER['REMOTE_ADDR'] !== '127.0.0.1')
-        {
-            exit('Access denied!');
-        }
+//        if($_SERVER['REMOTE_ADDR'] !== '127.0.0.1')
+//        {
+//            exit('Access denied!');
+//        }
     }
 
 
