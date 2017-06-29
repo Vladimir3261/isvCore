@@ -5,16 +5,14 @@
  * Date: 18.07.16
  * Time: 18:56
  */
-
 namespace isv\Files;
-
-
 use isv\IS;
-
 /**
+ * This class is Deprecated. User Fs component from ISV component repository.
  * @version 1.0
  * Class Files
  * @package isv\Files
+ * @deprecated
  */
 class Files
 {
@@ -32,7 +30,9 @@ class Files
         }
         $types = [
             'image/jpeg' => 'jpg',
-            'image/png'  => 'png'
+            'image/png'  => 'png',
+            'image/gif' => 'gif',
+            'image/bmp' => 'bmp',
         ];
         $extension = isset($types[$_FILES[$postFile]['tmp_name']]) ? $types[$_FILES[$postFile]['tmp_name']] : 'png';
         $name = 'upload_'.date('dmyHis').'_'.rand(10, 100).'.'.$extension;
