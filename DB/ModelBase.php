@@ -366,7 +366,6 @@ abstract class ModelBase implements ModelBaseInterface
             IS::app()->set('queryCount', $CQ->fetchColumn() );
             $sql .= 'LIMIT '.(int)$this->currentPage.', '.(int)$this->pageCount;
         }
-
         return ['sql' => $sql, 'params' => $paramsArray];
     }
 
