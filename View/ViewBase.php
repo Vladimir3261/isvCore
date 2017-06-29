@@ -37,6 +37,8 @@ class ViewBase
 
     protected $controller;
 
+    protected $ext;
+
     private $responseType = ViewBase::RESPONSE_HTML;
 
     public function __construct($params=null, $responseType=ViewBase::RESPONSE_HTML)
@@ -126,7 +128,7 @@ class ViewBase
                 $$k = $v;
             }
         }
-        require_once $file;
+        require $file;
     }
 
     /**
