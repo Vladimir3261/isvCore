@@ -39,7 +39,7 @@ abstract class Widget
      */
     protected function render($fileName, $array = null)
     {
-        $file = ROOTDIR.DIRSEP.'Widgets'.DIRSEP.'views'.DIRSEP.$fileName.'.php';
+        $file = ROOTDIR.DIRSEP.'Widgets'.DIRSEP.'views'.DIRSEP.IS::app()->getConfig('config')['template'].DIRSEP.$fileName.'.php';
         if(is_array($array) && count($array))
         {
             foreach($array as $k=>$v)
