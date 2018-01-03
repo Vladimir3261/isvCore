@@ -7,7 +7,6 @@ use isv\Helper\Logger;
 use isv\Http\Request;
 use isv\Router\Router;
 use isv\Http\Session;
-use Component\AuthComponent;
 use isv\EventManager\EventManager;
 /**
  * Class IS The main file of CMS defines a global repository for all core applications
@@ -248,7 +247,8 @@ class IS
     }
 
     /**
-     * @return AuthComponent
+     * This method requires for system to have class AuthComponent
+     * @return mixed
      */
     public function user()
     {
